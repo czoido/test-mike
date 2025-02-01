@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [prereleased, released]
+
+jobs:
+  deploy-docs:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - name: Install dependencies
+        run: pip install .[docs]
+      - name: Get release version
+        id: get_version
+        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: Deploy documentation
+        run: |
+          mike deploy --push --update-aliases $VERSION latest
+          mike set-default latest --push

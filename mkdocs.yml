@@ -1,0 +1,13 @@
+site_name: "Test Mike Docs"
+site_url: "https://czoido.github.io/test-mike/"
+theme:
+  name: material
+
+plugins:
+  - mike
+
+extra:
+  version:
+    provider: mike
+    alias: true
+    default: latest
