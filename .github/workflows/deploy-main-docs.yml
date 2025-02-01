@@ -18,5 +18,9 @@ jobs:
           python-version: "3.8"
       - name: Install dependencies
         run: pip install .[docs]
+      - name: Configure Git user
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
       - name: Deploy development documentation
         run: mike deploy --push --update-aliases dev
