@@ -30,7 +30,7 @@ jobs:
         if: ${{ inputs.version != 'dev' }}  # Solo eliminar en versiones numeradas (no en `dev`)
         run: |
           MAJOR_MINOR=$(echo "${{ inputs.version }}" | cut -d. -f1,2)  # Extrae `X.Y` de `X.Y.Z`
-          OLD_VERSIONS=$(mike list | grep "^v$MAJOR_MINOR" | cut -d' ' -f1 || true)  # Extrae solo las versiones sin el prefijo `v`
+          OLD_VERSIONS=$(mike list | grep "^$MAJOR_MINOR" | cut -d' ' -f1 || true)  # Extrae solo las versiones sin el prefijo `v`
           echo "OLD_VERSIONS: $OLD_VERSIONS"
           for OLD in $OLD_VERSIONS; do
             if [ "$OLD" != "${{ inputs.version }}" ]; then
