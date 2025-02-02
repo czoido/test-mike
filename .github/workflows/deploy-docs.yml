@@ -26,6 +26,18 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
+      - name: Remove previous patch versions
+        if: ${{ inputs.version != 'dev' }}  # Solo eliminar en versiones numeradas (no en `dev`)
+        run: |
+          MAJOR_MINOR=$(echo "${{ inputs.version }}" | cut -d. -f1,2)  # Extrae `X.Y` de `X.Y.Z`
+          OLD_VERSIONS=$(mike list | grep "^v$MAJOR_MINOR" | cut -d' ' -f1 | sed 's/^v//' || true)  # Extrae solo las versiones sin el prefijo `v`
+
+          for OLD in $OLD_VERSIONS; do
+            if [ "$OLD" != "${{ inputs.version }}" ]; then
+              echo "Removing old patch version: $OLD"
+              mike delete --push "$OLD"
+            fi
+          done
       - name: Deploy Documentation
         run: |
           if [ "${{ inputs.version }}" == "dev" ]; then
