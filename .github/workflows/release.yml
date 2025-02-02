@@ -10,3 +10,5 @@ jobs:
     uses: ./.github/workflows/deploy-docs.yml
     with:
       version: ${{ github.event.release.tag_name }}
+    permissions:
+      contents: write

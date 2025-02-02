@@ -64,8 +64,11 @@ jobs:
         run: |
           gh release create "v${{ env.VERSION }}" --draft --title "v${{ env.VERSION }}" --generate-notes
 
+
   deploy-dev-docs:
     needs: docs
     uses: ./.github/workflows/deploy-docs.yml
     with:
       version: dev
+    permissions:
+      contents: write
