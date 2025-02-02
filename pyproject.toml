@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "test-project"
-version = "0.1.1"
+version = "0.1.2"
 description = "Just testing mike."
 readme = "README.md"
 
