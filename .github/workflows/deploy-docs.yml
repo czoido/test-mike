@@ -1,15 +1,17 @@
-name: Deploy Development Docs
+name: Deploy Documentation
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
 
 jobs:
-  deploy:
+  deploy-docs:
     runs-on: ubuntu-latest
     permissions:
-      contents: write 
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,5 +26,11 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-      - name: Deploy development documentation
-        run: mike deploy --push --update-aliases dev
+      - name: Deploy Documentation
+        run: |
+          if [ "${{ inputs.version }}" == "dev" ]; then
+            mike deploy --push --update-aliases dev
+          else
+            mike deploy --push --update-aliases ${{ inputs.version }} latest
+            mike set-default latest --push
+          fi
