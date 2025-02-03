@@ -1,7 +1,20 @@
 site_name: "Test Mike Docs"
+
 site_url: "https://czoido.github.io/test-mike/"
+
 theme:
   name: material
+  palette:
+    - scheme: default
+      primary: custom
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
 
 plugins:
   - mike
